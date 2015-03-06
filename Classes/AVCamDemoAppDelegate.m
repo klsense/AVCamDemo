@@ -1,3 +1,10 @@
+//
+//  AVCamDemoAppDelegate.m
+//  AVCamDemo
+//
+//  Created by Pat Law on 7/30/13.
+//  Copyright (c) 2013 Patrick Law. All rights reserved.
+//
 #import "AVCamDemoAppDelegate.h"
 #import "AVCamDemoViewController.h"
 #import "AVCamDemoCaptureManager.h"

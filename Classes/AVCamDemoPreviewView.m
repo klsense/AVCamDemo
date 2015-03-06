@@ -1,3 +1,10 @@
+//
+//  AVCamDemoPreviewView.m
+//  AVCamDemo
+//
+//  Created by Pat Law on 7/30/13.
+//  Copyright (c) 2013 Patrick Law. All rights reserved.
+//
 #import "AVCamDemoPreviewView.h"
 
 @interface AVCamDemoPreviewView ()

@@ -1,8 +1,8 @@
 //
 //  PartialTransparentView.m
-//  AROverlayExample
+//  AVCamDemo
 //
-//  Created by Pat Law on 7/23/14.
+//  Created by Pat Law on 7/23/13.
 //
 //
 
