@@ -12,7 +12,7 @@
 
 
 
-@interface PartialTransparentView : UIView {
+@interface AVCamDemoPartialTransparentView : UIView {
     NSArray *rectsArray;
     UIColor *backgroundColor;
     UIImage *backgroundImage;

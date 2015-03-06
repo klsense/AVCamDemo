@@ -6,10 +6,10 @@
 //
 //
 
-#import "PartialTransparentView.h"
+#import "AVCamDemoPartialTransparentView.h"
 #import <QuartzCore/QuartzCore.h>
 
-@implementation PartialTransparentView
+@implementation AVCamDemoPartialTransparentView
 
 
 - (id)initWithFrame:(CGRect)frame backgroundImage:(UIImage*)image andTransparentRects:(NSArray*)rects;
@@ -48,7 +48,6 @@
     // clear the background in the given rectangles
     for (NSValue *holeRectValue in rectsArray) {
         CGRect holeRect = [holeRectValue CGRectValue];
-        CGRect holeRectIntersection = CGRectIntersection( holeRect, rect );
         [[UIColor clearColor] setFill];
         UIRectFill(holeRect);
     }

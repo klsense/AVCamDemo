@@ -9,7 +9,7 @@
 #import "AVCamDemoCaptureManager.h"
 #import "AVCamDemoPreviewView.h"
 #import "MDCSwipeToChoose.h"
-#import "PartialTransparentView.h"
+#import "AVCamDemoPartialTransparentView.h"
 
 @interface AVCamDemoViewController ()
 
@@ -208,7 +208,7 @@
         UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         NSArray *transparentRects = [[NSArray alloc] initWithObjects:[NSValue valueWithCGRect:CGRectMake(25, 50, 270, 418)], nil];
-        PartialTransparentView *transparentView = [[PartialTransparentView alloc] initWithFrame:[[[self view] layer]bounds] backgroundImage: i andTransparentRects:transparentRects];  //CGRectMake(0,0,320,568)
+        AVCamDemoPartialTransparentView *transparentView = [[AVCamDemoPartialTransparentView alloc] initWithFrame:[[[self view] layer]bounds] backgroundImage: i andTransparentRects:transparentRects];  //CGRectMake(0,0,320,568)
         transparentView.tag = 2002;
         [self.view addSubview:transparentView];
         //add close button for transparent view
@@ -224,7 +224,7 @@
     }
     else {
     NSArray *transparentRects = [[NSArray alloc] initWithObjects:[NSValue valueWithCGRect:CGRectMake(25, 50, 270, 418)], nil];
-    PartialTransparentView *transparentView = [[PartialTransparentView alloc] initWithFrame:[[[self view] layer]bounds] backgroundImage: img andTransparentRects:transparentRects];  //CGRectMake(0,0,320,568)
+    AVCamDemoPartialTransparentView *transparentView = [[AVCamDemoPartialTransparentView alloc] initWithFrame:[[[self view] layer]bounds] backgroundImage: img andTransparentRects:transparentRects];  //CGRectMake(0,0,320,568)
     transparentView.tag = 2002;
     [self.view addSubview:transparentView];
     //add close button for transparent view
@@ -345,7 +345,7 @@
             
         }
         
-        PartialTransparentView *transparentView = [[PartialTransparentView alloc] initWithFrame:[[[self view] layer]bounds] backgroundImage: [self.captureManager stillImage] andTransparentRects:transparentRects];  //CGRectMake(0,0,320,568)
+        AVCamDemoPartialTransparentView *transparentView = [[AVCamDemoPartialTransparentView alloc] initWithFrame:[[[self view] layer]bounds] backgroundImage: [self.captureManager stillImage] andTransparentRects:transparentRects];  //CGRectMake(0,0,320,568)
         transparentView.tag = 2001;
         [transparentView setNeedsDisplay];
         [transparentView setContentMode:UIViewContentModeRedraw];
