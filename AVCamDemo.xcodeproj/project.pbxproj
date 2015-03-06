@@ -37,7 +37,6 @@
 		E99F56421162B5660020042D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99F56411162B5660020042D /* AVFoundation.framework */; };
 		E99F56571162BA130020042D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99F56561162BA130020042D /* QuartzCore.framework */; };
 		E9A3542C116A7C4300CB935D /* AVCamDemoCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3542B116A7C4300CB935D /* AVCamDemoCaptureManager.m */; };
-		E9BDCA22117CCC8D00C82B11 /* ExpandyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BDCA21117CCC8D00C82B11 /* ExpandyButton.m */; };
 		E9E7A82A11B9DFCE009C78FD /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E7A82911B9DFCE009C78FD /* Icon@2x.png */; };
 		E9ECAEA61166C91E00937DFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECAEA51166C91E00937DFB /* CoreMedia.framework */; };
 		E9ECAFC81166CB6600937DFB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECAFC71166CB6600937DFB /* CoreVideo.framework */; };
@@ -97,8 +96,6 @@
 		E99F56561162BA130020042D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E9A3542A116A7C4300CB935D /* AVCamDemoCaptureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamDemoCaptureManager.h; sourceTree = "<group>"; };
 		E9A3542B116A7C4300CB935D /* AVCamDemoCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamDemoCaptureManager.m; sourceTree = "<group>"; };
-		E9BDCA20117CCC8D00C82B11 /* ExpandyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandyButton.h; sourceTree = "<group>"; };
-		E9BDCA21117CCC8D00C82B11 /* ExpandyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandyButton.m; sourceTree = "<group>"; };
 		E9E7A82911B9DFCE009C78FD /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/Icon@2x.png"; sourceTree = "<group>"; };
 		E9ECAEA51166C91E00937DFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		E9ECAFC71166CB6600937DFB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -129,8 +126,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E9BDCA20117CCC8D00C82B11 /* ExpandyButton.h */,
-				E9BDCA21117CCC8D00C82B11 /* ExpandyButton.m */,
 				1D3623240D0F684500981E51 /* AVCamDemoAppDelegate.h */,
 				1D3623250D0F684500981E51 /* AVCamDemoAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* AVCamDemoViewController.h */,
@@ -376,7 +371,6 @@
 				D47742E019E674B800AC9C5C /* MDCSwipeResult.m in Sources */,
 				D47742DA19E674B800AC9C5C /* MDCViewState.m in Sources */,
 				E9A3542C116A7C4300CB935D /* AVCamDemoCaptureManager.m in Sources */,
-				E9BDCA22117CCC8D00C82B11 /* ExpandyButton.m in Sources */,
 				E99F39AB118891D9007FFB8E /* AVCamDemoPreviewView.m in Sources */,
 				D47742E219E674B800AC9C5C /* UIView+MDCSwipeToChoose.m in Sources */,
 				D47742E119E674B800AC9C5C /* MDCSwipeToChooseView.m in Sources */,

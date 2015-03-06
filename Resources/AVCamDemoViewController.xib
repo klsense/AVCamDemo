@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1808</int>
 		<string key="IBDocument.SystemVersion">13F34</string>
-		<string key="IBDocument.InterfaceBuilderVersion">6245</string>
+		<string key="IBDocument.InterfaceBuilderVersion">6254</string>
 		<string key="IBDocument.AppKitVersion">1265.21</string>
 		<string key="IBDocument.HIToolboxVersion">698.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">6238</string>
+			<string key="NS.object.0">6247</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -204,43 +204,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">adjustingInfoView</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="729859850"/>
-					</object>
-					<int key="connectionID">171</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">videoPreviewView</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="197392939"/>
 					</object>
 					<int key="connectionID">198</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">adjustingFocus</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="202391391"/>
-					</object>
-					<int key="connectionID">237</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">adjustingExposure</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="953062843"/>
-					</object>
-					<int key="connectionID">238</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">adjustingWhiteBalance</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="27350501"/>
-					</object>
-					<int key="connectionID">239</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -380,39 +348,12 @@
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="cameraToggle:">id</string>
-						<string key="changeGravity">id</string>
-						<string key="exposureChange:">id</string>
-						<string key="flashChange:">id</string>
-						<string key="focusChange:">id</string>
-						<string key="hudViewToggle:">id</string>
 						<string key="record:">id</string>
 						<string key="still:">id</string>
-						<string key="torchChange:">id</string>
-						<string key="whiteBalanceChange:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="cameraToggle:">
 							<string key="name">cameraToggle:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="changeGravity">
-							<string key="name">changeGravity</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="exposureChange:">
-							<string key="name">exposureChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="flashChange:">
-							<string key="name">flashChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="focusChange:">
-							<string key="name">focusChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="hudViewToggle:">
-							<string key="name">hudViewToggle:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="record:">
@@ -423,55 +364,22 @@
 							<string key="name">still:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="torchChange:">
-							<string key="name">torchChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="whiteBalanceChange:">
-							<string key="name">whiteBalanceChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="adjustingExposure">UIView</string>
-						<string key="adjustingFocus">UIView</string>
 						<string key="adjustingInfoView">UIView</string>
-						<string key="adjustingWhiteBalance">UIView</string>
 						<string key="cameraToggleButton">UIBarButtonItem</string>
-						<string key="gravityButton">UIBarButtonItem</string>
-						<string key="hudButton">UIBarButtonItem</string>
 						<string key="overlayToolbar">UIToolbar</string>
 						<string key="recordButton">UIBarButtonItem</string>
 						<string key="stillImageButton">UIBarButtonItem</string>
 						<string key="videoPreviewView">AVCamDemoPreviewView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="adjustingExposure">
-							<string key="name">adjustingExposure</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="adjustingFocus">
-							<string key="name">adjustingFocus</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="adjustingInfoView">
 							<string key="name">adjustingInfoView</string>
 							<string key="candidateClassName">UIView</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="adjustingWhiteBalance">
-							<string key="name">adjustingWhiteBalance</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="cameraToggleButton">
 							<string key="name">cameraToggleButton</string>
-							<string key="candidateClassName">UIBarButtonItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="gravityButton">
-							<string key="name">gravityButton</string>
-							<string key="candidateClassName">UIBarButtonItem</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="hudButton">
-							<string key="name">hudButton</string>
 							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="overlayToolbar">
@@ -499,56 +407,16 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">AVCamDemoViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="cameraToggle:">id</string>
-						<string key="changeGravity">id</string>
-						<string key="exposureChange:">id</string>
-						<string key="flashChange:">id</string>
-						<string key="focusChange:">id</string>
-						<string key="hudViewToggle:">id</string>
 						<string key="record:">id</string>
 						<string key="still:">id</string>
-						<string key="torchChange:">id</string>
-						<string key="whiteBalanceChange:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="cameraToggle:">
-							<string key="name">cameraToggle:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="changeGravity">
-							<string key="name">changeGravity</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="exposureChange:">
-							<string key="name">exposureChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="flashChange:">
-							<string key="name">flashChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="focusChange:">
-							<string key="name">focusChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="hudViewToggle:">
-							<string key="name">hudViewToggle:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="record:">
 							<string key="name">record:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="still:">
 							<string key="name">still:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="torchChange:">
-							<string key="name">torchChange:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="whiteBalanceChange:">
-							<string key="name">whiteBalanceChange:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
@@ -644,10 +512,6 @@
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">NO</bool>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1808" key="NS.object.0"/>
-		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
 			<integer value="4600" key="NS.object.0"/>

@@ -3,8 +3,6 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 
-@interface AVCamDemoCaptureManager (AVCaptureFileOutputRecordingDelegate) <AVCaptureFileOutputRecordingDelegate>
-@end
 
 
 @interface AVCamDemoCaptureManager ()
@@ -12,10 +10,7 @@
 @property (nonatomic,retain) AVCaptureSession *session;
 @property (nonatomic,retain) AVCaptureDeviceInput *videoInput;
 @property (nonatomic,retain) AVCaptureDeviceInput *audioInput;
-@property (nonatomic,retain) AVCaptureMovieFileOutput *movieFileOutput;
 @property (nonatomic,retain) AVCaptureStillImageOutput *stillImageOutput;
-@property (nonatomic,retain) AVCaptureVideoDataOutput *videoDataOutput;
-@property (nonatomic,retain) AVCaptureAudioDataOutput *audioDataOutput;
 @property (nonatomic,retain) id deviceConnectedObserver;
 @property (nonatomic,retain) id deviceDisconnectedObserver;
 @property (nonatomic,assign) UIBackgroundTaskIdentifier backgroundRecordingID;
@@ -25,10 +20,7 @@
 @interface AVCamDemoCaptureManager (Internal)
 
 - (AVCaptureDevice *) cameraWithPosition:(AVCaptureDevicePosition)position;
-- (AVCaptureDevice *) frontFacingCamera;
 - (AVCaptureDevice *) backFacingCamera;
-- (AVCaptureDevice *) audioDevice;
-- (NSURL *) tempFileURL;
 
 @end
 
@@ -38,22 +30,13 @@
 
 @synthesize session = _session;
 @synthesize videoInput = _videoInput;
-@synthesize audioInput = _audioInput;
-@synthesize movieFileOutput = _movieFileOutput;
 @synthesize stillImageOutput = _stillImageOutput;
-@dynamic flashMode;
-@dynamic torchMode;
 @dynamic focusMode;
 @dynamic exposureMode;
-@dynamic whiteBalanceMode;
 @synthesize delegate = _delegate;
-@synthesize videoDataOutput = _videoDataOutput;
-@synthesize audioDataOutput = _audioDataOutput;
 @synthesize backgroundRecordingID = _backgroundRecordingID;
 @synthesize deviceConnectedObserver = _deviceConnectedObserver;
 @synthesize deviceDisconnectedObserver = _deviceDisconnectedObserver;
-
-//added from avorverlayexample
 @synthesize stillImage;
 
 - (id) init
@@ -62,25 +45,14 @@
     if (self != nil) {
         void (^deviceConnectedBlock)(NSNotification *) = ^(NSNotification *notification) {
             AVCaptureSession *session = [self session];
-            AVCaptureDeviceInput *newAudioInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self audioDevice] error:nil];
             AVCaptureDeviceInput *newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self backFacingCamera] error:nil];
-            
             [session beginConfiguration];
-            [session removeInput:[self audioInput]];
-            if ([session canAddInput:newAudioInput]) {
-                [session addInput:newAudioInput];
-            }
             [session removeInput:[self videoInput]];
             if ([session canAddInput:newVideoInput]) {
                 [session addInput:newVideoInput];
             }
             [session commitConfiguration];
-            
-            [self setAudioInput:newAudioInput];
-            //            [newAudioInput release];
             [self setVideoInput:newVideoInput];
-            //            [newVideoInput release];
-            
             id delegate = [self delegate];
             if ([delegate respondsToSelector:@selector(deviceCountChanged)]) {
                 [delegate deviceCountChanged];
@@ -121,26 +93,15 @@
 - (void) dealloc
 {
     [[self session] stopRunning];
-    [self setSession:nil];
-    [self setVideoInput:nil];
-    [self setAudioInput:nil];
-    [self setMovieFileOutput:nil];
-    [self setStillImageOutput:nil];
-    [self setVideoDataOutput:nil];
-    [self setAudioDataOutput:nil];
-    //    [super dealloc];
 }
 
 - (BOOL) setupSessionWithPreset:(NSString *)sessionPreset error:(NSError **)error
 {
     BOOL success = NO;
     
-    // Init the device inputs
+//    // Init the device inputs
     AVCaptureDeviceInput *videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self backFacingCamera] error:error];
     [self setVideoInput:videoInput]; // stash this for later use if we need to switch cameras
-    
-    AVCaptureDeviceInput *audioInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self audioDevice] error:error];
-    [self setAudioInput:audioInput];
     
     // Setup the default file outputs
     AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
@@ -148,12 +109,7 @@
                                     AVVideoCodecJPEG, AVVideoCodecKey,
                                     nil];
     [stillImageOutput setOutputSettings:outputSettings];
-    //    [outputSettings release];
     [self setStillImageOutput:stillImageOutput];
-    
-    AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
-    [self setMovieFileOutput:movieFileOutput];
-    //    [movieFileOutput release];
     
     // Setup and start the capture session
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
@@ -161,42 +117,22 @@
     if ([session canAddInput:videoInput]) {
         [session addInput:videoInput];
     }
-    if ([session canAddInput:audioInput]) {
-        [session addInput:audioInput];
-    }
-    if ([session canAddOutput:movieFileOutput]) {
-        [session addOutput:movieFileOutput];
-    }
     if ([session canAddOutput:stillImageOutput]) {
         [session addOutput:stillImageOutput];
     }
-    
     [session setSessionPreset:sessionPreset];
     [session startRunning];
-    
     [self setSession:session];
-    
-    //    [session release];
-    
     success = YES;
-    
     [self performSelector:@selector(deviceOrientationDidChange)];
-    
-    
     return success;
 }
 
 - (void)deviceOrientationDidChange
 {
     UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
-    
-    /*if (deviceOrientation == UIDeviceOrientationPortrait)
-     orientation = AVCaptureVideoOrientationPortrait;
-     else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown)
-     orientation = AVCaptureVideoOrientationPortraitUpsideDown;
-     
      // AVCapture and UIDevice have opposite meanings for landscape left and right (AVCapture orientation is the same as UIInterfaceOrientation)
-     else*/ if (deviceOrientation == UIDeviceOrientationLandscapeLeft){
+    if (deviceOrientation == UIDeviceOrientationLandscapeLeft){
          //orientation = AVCaptureVideoOrientationLandscapeRight;
          NSLog(@"right");
      }
@@ -204,8 +140,6 @@
          //orientation = AVCaptureVideoOrientationLandscapeLeft;
          NSLog(@"left");
      }
-    
-    // Ignore device orientations for which there is no corresponding still image orientation (e.g. UIDeviceOrientationFaceUp)
 }
 
 - (NSUInteger) cameraCount
@@ -218,49 +152,19 @@
     return [[AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio] count];
 }
 
-- (BOOL) isRecording
-{
-    return [[self movieFileOutput] isRecording];
-}
-
-- (void) startRecording
-{
-    if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-        [self setBackgroundRecordingID:[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{}]];
-    }
-    
-    AVCaptureConnection *videoConnection = [AVCamDemoCaptureManager connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self movieFileOutput] connections]];
-    if ([videoConnection isVideoOrientationSupported]) {
-        [videoConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];
-    }
-    
-    [[self movieFileOutput] startRecordingToOutputFileURL:[self tempFileURL]
-                                        recordingDelegate:self];
-}
-
-- (void) stopRecording
-{
-    [[self movieFileOutput] stopRecording];
-}
-
 - (void) captureStillImage
 {
     AVCaptureConnection *videoConnection = [AVCamDemoCaptureManager connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self stillImageOutput] connections]];
     if ([videoConnection isVideoOrientationSupported]) {
         UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
         if (deviceOrientation == UIDeviceOrientationLandscapeRight) {
-//            [videoConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
             [videoConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];
-
         }
         if (deviceOrientation == UIDeviceOrientationLandscapeLeft) {
-//            [videoConnection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
             [videoConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];
-
         }
         if (UIInterfaceOrientationIsPortrait(deviceOrientation)){
             [videoConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];
-            
         }
     }
     
@@ -269,21 +173,7 @@
                                                              if (imageDataSampleBuffer != NULL) {
                                                                  NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                                                                  UIImage *image = [[UIImage alloc] initWithData:imageData];
-                                                                 //                                                                 ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-                                                                 //                                                                 [library writeImageToSavedPhotosAlbum:[image CGImage]
-                                                                 //                                                                                           orientation:(ALAssetOrientation)[image imageOrientation]
-                                                                 //                                                                                       completionBlock:^(NSURL *assetURL, NSError *error){
-                                                                 //                                                                                           if (error) {
-                                                                 //                                                                                               id delegate = [self delegate];
-                                                                 //                                                                                               if ([delegate respondsToSelector:@selector(captureStillImageFailedWithError:)]) {
-                                                                 //                                                                                                   [delegate captureStillImageFailedWithError:error];
-                                                                 //                                                                                               }
-                                                                 //                                                                                           }
-                                                                 //                                                                                       }];
-                                                                 //                                                                 [library release];
-                                                                 //                                                                 [image release];
                                                                  [self setStillImage:image];
-                                                                 //[image release];
                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kPushAcceptView object:nil];
                                                                  
                                                              } else if (error) {
@@ -293,107 +183,6 @@
                                                                  }
                                                              }
                                                          }];
-}
-
-- (BOOL) cameraToggle
-{
-    BOOL success = NO;
-    
-    if ([self hasMultipleCameras]) {
-        NSError *error;
-        AVCaptureDeviceInput *videoInput = [self videoInput];
-        AVCaptureDeviceInput *newVideoInput;
-        AVCaptureDevicePosition position = [[videoInput device] position];
-        if (position == AVCaptureDevicePositionBack) {
-            newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self frontFacingCamera] error:&error];
-        } else if (position == AVCaptureDevicePositionFront) {
-            newVideoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self backFacingCamera] error:&error];
-        } else {
-            goto bail;
-        }
-        
-        AVCaptureSession *session = [self session];
-        if (newVideoInput != nil) {
-            [session beginConfiguration];
-            [session removeInput:videoInput];
-            if ([session canAddInput:newVideoInput]) {
-                [session addInput:newVideoInput];
-                [self setVideoInput:newVideoInput];
-            } else {
-                [session addInput:videoInput];
-            }
-            [session commitConfiguration];
-            success = YES;
-            //            [newVideoInput release];
-        } else if (error) {
-            id delegate = [self delegate];
-            if ([delegate respondsToSelector:@selector(someOtherError:)]) {
-                [delegate someOtherError:error];
-            }
-        }
-    }
-    
-bail:
-    return success;
-}
-
-- (BOOL) hasMultipleCameras
-{
-    return [[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] count] > 1 ? YES : NO;
-}
-
-- (BOOL) hasFlash
-{
-    return [[[self videoInput] device] hasFlash];
-}
-
-- (AVCaptureFlashMode) flashMode
-{
-    return [[[self videoInput] device] flashMode];
-}
-
-- (void) setFlashMode:(AVCaptureFlashMode)flashMode
-{
-    AVCaptureDevice *device = [[self videoInput] device];
-    if ([device isFlashModeSupported:flashMode] && [device flashMode] != flashMode) {
-        NSError *error;
-        if ([device lockForConfiguration:&error]) {
-            [device setFlashMode:flashMode];
-            [device unlockForConfiguration];
-        } else {
-            id delegate = [self delegate];
-            if ([delegate respondsToSelector:@selector(acquiringDeviceLockFailedWithError:)]) {
-                [delegate acquiringDeviceLockFailedWithError:error];
-            }
-        }
-    }
-}
-
-- (BOOL) hasTorch
-{
-    return [[[self videoInput] device] hasTorch];
-}
-
-- (AVCaptureTorchMode) torchMode
-{
-    return [[[self videoInput] device] torchMode];
-}
-
-- (void) setTorchMode:(AVCaptureTorchMode)torchMode
-{
-    AVCaptureDevice *device = [[self videoInput] device];
-    if ([device isTorchModeSupported:torchMode] && [device torchMode] != torchMode) {
-        NSError *error;
-        if ([device lockForConfiguration:&error]) {
-            [device setTorchMode:torchMode];
-            [device unlockForConfiguration];
-        } else {
-            id delegate = [self delegate];
-            if ([delegate respondsToSelector:@selector(acquiringDeviceLockFailedWithError:)]) {
-                [delegate acquiringDeviceLockFailedWithError:error];
-            }
-        }
-    }
 }
 
 - (BOOL) hasFocus
@@ -461,39 +250,6 @@ bail:
     }
 }
 
-- (BOOL) hasWhiteBalance
-{
-    AVCaptureDevice *device = [[self videoInput] device];
-    
-    return  [device isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeLocked] ||
-    [device isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeAutoWhiteBalance];
-}
-
-- (AVCaptureWhiteBalanceMode) whiteBalanceMode
-{
-    return [[[self videoInput] device] whiteBalanceMode];
-}
-
-- (void) setWhiteBalanceMode:(AVCaptureWhiteBalanceMode)whiteBalanceMode
-{
-    if (whiteBalanceMode == 1) {
-        whiteBalanceMode = 2;
-    }
-    AVCaptureDevice *device = [[self videoInput] device];
-    if ([device isWhiteBalanceModeSupported:whiteBalanceMode] && [device whiteBalanceMode] != whiteBalanceMode) {
-        NSError *error;
-        if ([device lockForConfiguration:&error]) {
-            [device setWhiteBalanceMode:whiteBalanceMode];
-            [device unlockForConfiguration];
-        } else {
-            id delegate = [self delegate];
-            if ([delegate respondsToSelector:@selector(acquiringDeviceLockFailedWithError:)]) {
-                [delegate acquiringDeviceLockFailedWithError:error];
-            }
-        }
-    }
-}
-
 - (void) focusAtPoint:(CGPoint)point
 {
     AVCaptureDevice *device = [[self videoInput] device];
@@ -530,17 +286,11 @@ bail:
     }
 }
 
-- (void) setConnectionWithMediaType:(NSString *)mediaType enabled:(BOOL)enabled;
-{
-    [[AVCamDemoCaptureManager connectionWithMediaType:mediaType fromConnections:[[self movieFileOutput] connections]] setEnabled:enabled];
-}
-
 + (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 {
     for ( AVCaptureConnection *connection in connections ) {
         for ( AVCaptureInputPort *port in [connection inputPorts] ) {
             if ( [[port mediaType] isEqual:mediaType] ) {
-                //				return [[connection retain] autorelease];
                 return connection;
                 NSLog(@"error with retain located in avcamdemocapturemanager connectionwithmediatype");
             }
@@ -564,90 +314,9 @@ bail:
     return nil;
 }
 
-- (AVCaptureDevice *) frontFacingCamera
-{
-    return [self cameraWithPosition:AVCaptureDevicePositionFront];
-}
-
 - (AVCaptureDevice *) backFacingCamera
 {
     return [self cameraWithPosition:AVCaptureDevicePositionBack];
-}
-
-- (AVCaptureDevice *) audioDevice
-{
-    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeAudio];
-    if ([devices count] > 0) {
-        return [devices objectAtIndex:0];
-    }
-    return nil;
-}
-
-- (NSURL *) tempFileURL
-{
-    NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mov"];
-    NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:outputPath]) {
-        NSError *error;
-        if ([fileManager removeItemAtPath:outputPath error:&error] == NO) {
-            id delegate = [self delegate];
-            if ([delegate respondsToSelector:@selector(someOtherError:)]) {
-                [delegate someOtherError:error];
-            }
-        }
-    }
-    //    [outputPath release];
-    return outputURL;
-}
-
-@end
-
-
-@implementation AVCamDemoCaptureManager (AVCaptureFileOutputRecordingDelegate)
-
-- (void)             captureOutput:(AVCaptureFileOutput *)captureOutput
-didStartRecordingToOutputFileAtURL:(NSURL *)fileURL
-                   fromConnections:(NSArray *)connections
-{
-    id delegate = [self delegate];
-    if ([delegate respondsToSelector:@selector(recordingBegan)]) {
-        [delegate recordingBegan];
-    }
-}
-
-- (void)              captureOutput:(AVCaptureFileOutput *)captureOutput
-didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
-                    fromConnections:(NSArray *)connections
-                              error:(NSError *)error
-{
-    id delegate = [self delegate];
-    if (error && [delegate respondsToSelector:@selector(someOtherError:)]) {
-        [delegate someOtherError:error];
-    }
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL]) {
-        [library writeVideoAtPathToSavedPhotosAlbum:outputFileURL
-                                    completionBlock:^(NSURL *assetURL, NSError *error){
-                                        if (error && [delegate respondsToSelector:@selector(assetLibraryError:forURL:)]) {
-                                            [delegate assetLibraryError:error forURL:assetURL];
-                                        }
-                                    }];
-    } else {
-        if ([delegate respondsToSelector:@selector(cannotWriteToAssetLibrary)]) {
-            [delegate cannotWriteToAssetLibrary];
-        }
-    }
-    //    [library release];    
-    
-    if ([[UIDevice currentDevice] isMultitaskingSupported]) {
-        [[UIApplication sharedApplication] endBackgroundTask:[self backgroundRecordingID]];
-    }
-    
-    if ([delegate respondsToSelector:@selector(recordingFinished)]) {
-        [delegate recordingFinished];
-    }
 }
 
 @end
